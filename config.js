@@ -3,7 +3,7 @@
 // SUPABASE_ANON_KEY — публічний ("anon") ключ, його можна безпечно тримати у клієнтському коді,
 // бо доступ до даних контролюється RLS-політиками з schema.sql
 
-const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+const SUPABASE_URL = "https://ptupydcoysclmdjmwswt.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_keSKBn0gFDOBG_b36mqXsg_NQelt3S_";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

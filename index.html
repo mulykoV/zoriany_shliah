@@ -11,22 +11,46 @@
 <div id="starfield"></div>
 
 <section class="hero">
+  <svg class="pleiades-logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <g class="logo-lines">
+      <line x1="18" y1="75" x2="42" y2="55"/>
+      <line x1="42" y1="55" x2="52" y2="72"/>
+      <line x1="52" y1="72" x2="62" y2="85"/>
+      <line x1="52" y1="72" x2="72" y2="60"/>
+      <line x1="72" y1="60" x2="90" y2="50"/>
+      <line x1="90" y1="50" x2="100" y2="65"/>
+      <line x1="72" y1="60" x2="68" y2="38"/>
+    </g>
+    <g class="logo-stars">
+      <circle class="star" cx="18" cy="75" r="5" style="--d:0.2s"/>
+      <circle class="star" cx="42" cy="55" r="3.5" style="--d:0.5s"/>
+      <circle class="star" cx="52" cy="72" r="5" style="--d:0.8s"/>
+      <circle class="star" cx="62" cy="85" r="3" style="--d:1.1s"/>
+      <circle class="star star-core" cx="72" cy="60" r="7"/>
+      <circle class="star" cx="90" cy="50" r="3.5" style="--d:1.4s"/>
+      <circle class="star" cx="100" cy="65" r="3" style="--d:1.7s"/>
+      <circle class="star" cx="68" cy="38" r="3" style="--d:2s"/>
+    </g>
+  </svg>
   <div class="eyebrow">Плеяда · нове сузір'я</div>
   <h1>Зоряний шлях</h1>
-  <p>Кожен рік поруч із вами лишив по собі зірку. Прогорни вгору — і побач, як складається сузір'я.</p>
+  <p class="host-line">Тебе кличе у гості <span>Mulyko Volodymyr</span></p>
+  <p>Кожен рік поруч із вами лишив по собі зірку. Прогорни вниз — і побач, як складається сузір'я.</p>
   <div class="scroll-hint">↓ гортай ↓</div>
 </section>
 
 <section class="path-section" id="path-section">
   <svg class="path-svg" id="path-svg" preserveAspectRatio="none">
+    <path id="wound-path" class="wound-line" d=""></path>
     <path id="constellation-path" class="path-line" d=""></path>
+    <g id="stardust-group"></g>
   </svg>
 </section>
 
 <section class="wishlist-section" id="wishlist">
   <div class="eyebrow">Дарунки</div>
   <h2>Зоряний вішліст</h2>
-  <p class="sub">Деякі зірки краще запалювати гуртом — бронюйте разом, тут видно, скільки вже зібрано.</p>
+  <p class="sub">Кожен подарунок — одна зірка. Один клік бронює її одразу для всіх — щоб не дублювались.</p>
   <div id="wishlist-list"></div>
 </section>
 
@@ -35,7 +59,9 @@
   <h2>Ти прийдеш?</h2>
   <p class="sub">Дай знати, щоб зірка не лишилась самотньою.</p>
   <form class="rsvp-form" id="rsvp-form">
-    <input type="text" id="rsvp-name" placeholder="Твоє ім'я" required />
+    <select id="rsvp-name-select" required></select>
+    <input type="text" id="rsvp-name-other" placeholder="Впиши своє ім'я" style="display:none;" />
+    <input type="email" id="rsvp-email" placeholder="Email (щоб надіслати листівку-запрошення)" required />
     <input type="text" id="rsvp-year" placeholder="Яку зірку/рік ти пам'ятаєш найкраще?" />
     <textarea id="rsvp-comment" rows="3" placeholder="Коментар (необов'язково)"></textarea>
     <label><input type="checkbox" id="rsvp-plusone" /> Прийду не сам(а)</label>
@@ -45,10 +71,18 @@
 </section>
 
 <footer>
-  designed among the stars · 2026
+  designed by PLEiada command · 2026
 </footer>
 
 <canvas id="explosion-canvas"></canvas>
+<canvas id="warp-canvas"></canvas>
+
+<div class="gallery-modal" id="gallery-modal">
+  <button class="close-modal" id="close-gallery">✕</button>
+  <div class="gallery-year" id="gallery-year"></div>
+  <div class="gallery-caption" id="gallery-caption"></div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</div>
 
 <div class="invite-modal" id="invite-modal">
   <div class="invite-box">

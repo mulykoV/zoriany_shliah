@@ -30,7 +30,7 @@ git push -u origin main
 1. Зареєструйся на supabase.com → New Project (обери регіон ближче до України/Європи)
 2. Дочекайся ініціалізації проєкту (~2 хв)
 3. Відкрий SQL Editor → New query → встав весь вміст `supabase/schema.sql` → Run
-4. Перейди в Project Settings → API → скопіюй `Project URL` і `anon public` ключ
+4. Перейди в Project Settings → API → скопzіюй `Project URL` і `anon public` ключ
 5. Встав їх у `config.js` замість `YOUR-PROJECT` і `YOUR-ANON-PUBLIC-KEY`
 6. Заповни свої реальні пункти вішліста прямо в Supabase → Table Editor → `wishlist_items` (онови/додай рядки, встанови справжні суми)
 
