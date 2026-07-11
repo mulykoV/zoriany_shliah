@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зоряний шлях</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="starfield"></div>
+
+<section class="hero">
+  <div class="eyebrow">Плеяда · нове сузір'я</div>
+  <h1>Зоряний шлях</h1>
+  <p>Кожен рік поруч із вами лишив по собі зірку. Прогорни вгору — і побач, як складається сузір'я.</p>
+  <div class="scroll-hint">↓ гортай ↓</div>
+</section>
+
+<section class="path-section" id="path-section">
+  <svg class="path-svg" id="path-svg" preserveAspectRatio="none">
+    <path id="constellation-path" class="path-line" d=""></path>
+  </svg>
+</section>
+
+<section class="wishlist-section" id="wishlist">
+  <div class="eyebrow">Дарунки</div>
+  <h2>Зоряний вішліст</h2>
+  <p class="sub">Деякі зірки краще запалювати гуртом — бронюйте разом, тут видно, скільки вже зібрано.</p>
+  <div id="wishlist-list"></div>
+</section>
+
+<section class="rsvp-section" id="rsvp">
+  <div class="eyebrow">Підтвердження</div>
+  <h2>Ти прийдеш?</h2>
+  <p class="sub">Дай знати, щоб зірка не лишилась самотньою.</p>
+  <form class="rsvp-form" id="rsvp-form">
+    <input type="text" id="rsvp-name" placeholder="Твоє ім'я" required />
+    <input type="text" id="rsvp-year" placeholder="Яку зірку/рік ти пам'ятаєш найкраще?" />
+    <textarea id="rsvp-comment" rows="3" placeholder="Коментар (необов'язково)"></textarea>
+    <label><input type="checkbox" id="rsvp-plusone" /> Прийду не сам(а)</label>
+    <button type="submit" class="btn primary">Підтвердити прихід</button>
+    <div class="submit-status" id="rsvp-status"></div>
+  </form>
+</section>
+
+<footer>
+  designed among the stars · 2026
+</footer>
+
+<canvas id="explosion-canvas"></canvas>
+
+<div class="invite-modal" id="invite-modal">
+  <div class="invite-box">
+    <button class="close-modal" id="close-modal">✕</button>
+    <div class="eyebrow">Нова зірка запалена</div>
+    <h2>Приєднуйся</h2>
+    <div class="details">
+      <b>Дата:</b> <span id="modal-date"></span><br>
+      <b>Час:</b> <span id="modal-time"></span><br>
+      <b>Місце:</b> <span id="modal-place"></span>
+    </div>
+    <div class="invite-actions">
+      <a href="#rsvp" class="btn primary" onclick="document.getElementById('invite-modal').classList.remove('show')">Підтвердити прихід</a>
+      <a href="#wishlist" class="btn" onclick="document.getElementById('invite-modal').classList.remove('show')">Вішліст</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
