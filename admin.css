@@ -1,0 +1,205 @@
+.admin-body{ min-height: 100vh; }
+
+.admin-login{
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.admin-login-box{
+  max-width: 380px;
+  width: 100%;
+  background: rgba(15,20,35,0.9);
+  border: 1px solid rgba(212,162,76,0.3);
+  border-radius: 6px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+.admin-login-box h1{
+  font-size: 2rem;
+  font-style: italic;
+  margin: 0.5rem 0 1.5rem;
+}
+.admin-login-box form{
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.admin-login-box input{
+  background: rgba(244,239,227,0.05);
+  border: 1px solid rgba(124,111,158,0.4);
+  color: var(--cream);
+  padding: 0.8rem 1rem;
+  border-radius: 3px;
+  font-family: 'Spectral', serif;
+  font-size: 0.95rem;
+}
+.admin-status{
+  font-size: 0.85rem;
+  color: var(--ember);
+  min-height: 1.2em;
+}
+
+.admin-dashboard{
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+.admin-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.admin-header h1{
+  font-size: 2rem;
+  font-style: italic;
+}
+
+.admin-tabs{
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.admin-tab{
+  font-family: 'Spectral', serif;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 3px;
+  border: 1px solid rgba(124,111,158,0.4);
+  background: transparent;
+  color: var(--violet);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.admin-tab.active, .admin-tab:hover{
+  border-color: var(--gold);
+  color: var(--gold-soft);
+}
+
+.admin-add-form{
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+.admin-add-form input{
+  background: rgba(244,239,227,0.05);
+  border: 1px solid rgba(124,111,158,0.4);
+  color: var(--cream);
+  padding: 0.6rem 0.9rem;
+  border-radius: 3px;
+  font-family: 'Spectral', serif;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 160px;
+}
+.admin-add-form-wide input{ min-width: 180px; }
+
+.admin-table-wrap{
+  overflow-x: auto;
+  border: 1px solid rgba(124,111,158,0.25);
+  border-radius: 4px;
+}
+.admin-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.admin-table th, .admin-table td{
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(124,111,158,0.2);
+  white-space: nowrap;
+}
+.admin-table th{
+  color: var(--gold-soft);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  background: rgba(212,162,76,0.06);
+}
+.admin-table td{ color: var(--cream); }
+.admin-table tr:last-child td{ border-bottom: none; }
+.admin-table .muted{ color: var(--violet); font-size: 0.85em; }
+
+.admin-delete-btn{
+  background: none;
+  border: 1px solid rgba(232,146,124,0.5);
+  color: var(--ember);
+  padding: 0.3rem 0.7rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: 'Spectral', serif;
+  transition: background 0.2s ease;
+}
+.admin-delete-btn:hover{ background: rgba(232,146,124,0.15); }
+
+.tag{
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 10px;
+  border: 1px solid rgba(124,111,158,0.4);
+  color: var(--violet);
+}
+.tag.yes{ border-color: rgba(212,162,76,0.6); color: var(--gold-soft); }
+
+.wishlist-admin-card{
+  border: 1px solid rgba(124,111,158,0.25);
+  border-radius: 4px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+}
+.wishlist-admin-card .row{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.wishlist-admin-card .thumb{
+  width: 60px; height: 60px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: rgba(124,111,158,0.15);
+  flex-shrink: 0;
+}
+.wishlist-admin-card .item-name{
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--cream);
+}
+.wishlist-admin-card .item-meta{
+  font-size: 0.82rem;
+  color: var(--violet);
+  margin-top: 0.2rem;
+}
+.wishlist-admin-card .contributors{
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed rgba(124,111,158,0.25);
+}
+.wishlist-admin-card .contributor-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 0.35rem 0;
+  color: var(--cream);
+}
+.wishlist-admin-card .contributor-empty{
+  font-size: 0.85rem;
+  color: var(--violet);
+  font-style: italic;
+}

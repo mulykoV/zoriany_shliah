@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Адмінка · Зоряний шлях</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<div id="starfield"></div>
+
+<!-- Логін -->
+<section class="admin-login" id="admin-login">
+  <div class="admin-login-box">
+    <div class="eyebrow">Зоряний шлях</div>
+    <h1>Адмінка</h1>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email" required />
+      <input type="password" id="login-password" placeholder="Пароль" required />
+      <button type="submit" class="btn primary">Увійти</button>
+      <div class="admin-status" id="login-status"></div>
+    </form>
+  </div>
+</section>
+
+<!-- Дашборд (показується після логіну) -->
+<section class="admin-dashboard" id="admin-dashboard" style="display:none;">
+  <div class="admin-header">
+    <h1>Адмінка</h1>
+    <button class="btn" id="logout-btn">Вийти</button>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="admin-tab active" data-tab="guests">Гості</button>
+    <button class="admin-tab" data-tab="rsvp">RSVP</button>
+    <button class="admin-tab" data-tab="wishlist">Вішліст</button>
+  </div>
+
+  <!-- Гості -->
+  <div class="admin-panel" id="panel-guests">
+    <form class="admin-add-form" id="guest-add-form">
+      <input type="text" id="guest-name" placeholder="Ім'я гостя" required />
+      <input type="email" id="guest-email" placeholder="Email (необов'язково)" />
+      <select id="guest-invite-file"></select>
+      <button type="submit" class="btn primary">Додати гостя</button>
+    </form>
+    <div class="admin-table-wrap">
+      <table class="admin-table" id="guests-table">
+        <thead>
+          <tr>
+            <th>Ім'я</th>
+            <th>Email</th>
+            <th>Сертифікат</th>
+            <th>Лист надіслано</th>
+            <th>RSVP</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="guests-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RSVP -->
+  <div class="admin-panel" id="panel-rsvp" style="display:none;">
+    <div class="admin-table-wrap">
+      <table class="admin-table" id="rsvp-table">
+        <thead>
+          <tr>
+            <th>Ім'я</th>
+            <th>Email</th>
+            <th>+1</th>
+            <th>Улюблений рік</th>
+            <th>Коментар</th>
+            <th>Коли</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rsvp-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Вішліст -->
+  <div class="admin-panel" id="panel-wishlist" style="display:none;">
+    <form class="admin-add-form admin-add-form-wide" id="item-add-form">
+      <input type="text" id="item-name" placeholder="Назва подарунка" required />
+      <input type="text" id="item-product-url" placeholder="Посилання на товар (необов'язково)" />
+      <input type="text" id="item-image-url" placeholder="URL картинки (необов'язково)" />
+      <input type="number" id="item-amount" placeholder="Сума (0 — просто застовпити)" min="0" />
+      <input type="number" id="item-sort" placeholder="Порядок" min="0" />
+      <button type="submit" class="btn primary">Додати товар</button>
+    </form>
+    <div id="wishlist-admin-list"></div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

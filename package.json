@@ -3,6 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "googleapis": "^173.0.0",
+    "nodemailer": "^9.0.3",
     "resend": "^4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "http-server": "^14.1.1"
+  },
+  "scripts": {
+    "server": "node server.js",
+    "frontend": "http-server . -p 8080",
+    "dev": "concurrently -n API,WEB -c blue,green \"npm run server\" \"npm run frontend\""
   }
 }

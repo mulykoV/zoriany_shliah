@@ -48,34 +48,34 @@ const MEMORIES = [
     thumb: 'linear-gradient(135deg,#3a2f55,#1a1f33)',
     caption: 'Рік, з якого починається цей відлік.',
     gallery: [
-      { type: 'video', src: 'photos/2023/document_5345922785191408778.mp4', caption: 'ТВІЙ ПІДПИС' },
-      { type: 'video', src: 'photos/2023/IMG_9236.MOV', caption: 'ТВІЙ ПІДПИС' },
-      { type: 'image', src: 'photos/2023/photo_5345922785647643541_y.jpg', caption: 'ТВІЙ ПІДПИС' },
-      { type: 'image', src: 'photos/2023/photo_5345922785647643542_y.jpg', caption: 'ТВІЙ ПІДПИС' },
-      { type: 'image', src: 'photos/2023/photo_5345922785647643543_y.jpg', caption: 'ТВІЙ ПІДПИС' },
-      { type: 'image', src: 'photos/2023/photo_5345922785647643544_y.jpg', caption: 'ТВІЙ ПІДПИС' },
+      { type: 'video', src: 'photos/2023/document_5345922785191408778.mp4', caption: 'Той момент, коли ще не знали — сміх теж буває паливом для ракети.' },
+      { type: 'video', src: 'photos/2023/IMG_9236.mp4', caption: 'Камера трясеться сильніше за нас. Рекорд сміху зафіксовано.' },
+      { type: 'image', src: 'photos/2023/photo_5345922785647643541_y.jpg', caption: 'Перша спроба обійняти цілу галактику. Вдалась лише наполовину.' },
+      { type: 'image', src: 'photos/2023/photo_5345922785647643542_y.jpg', caption: 'Кадр, у якому сміх переміг усю режисуру.' },
+      { type: 'image', src: 'photos/2023/photo_5345922785647643543_y.jpg', caption: '«Тримайся» сказали в переносному сенсі. Взяли буквально.' },
+      { type: 'image', src: 'photos/2023/photo_5345922785647643544_y.jpg', caption: 'Фінальний кадр битви за плече. Переможця так і не визначили.' },
     ]
   },
   {
     year: '2024',
     thumb: 'linear-gradient(135deg,#4a3b2a,#1a1f33)',
-    caption: '',
+    caption: 'Тихий рік. Але й тиха зірка встигла блиснути.',
     gallery: [
-      // { type: 'image', src: 'photos/2024/IMG_XXXX.JPG' },
+      { type: 'video', src: 'photos/2024/IMG_6540.mp4', caption: 'Рік, який мовчав більше, ніж говорив, — та встиг залишити цей кадр.' },
     ]
   },
   {
     year: '2025',
     thumb: 'linear-gradient(135deg,#2a3b4a,#1a1f33)',
-    caption: '',
+    caption: 'Рік, який ще зовсім свіжий у пам\'яті.',
     gallery: [
-      { type: 'image', src: 'photos/2025/IMG_2228.JPG' },
-      { type: 'image', src: 'photos/2025/IMG_2229.JPG' },
-      { type: 'image', src: 'photos/2025/IMG_2238.JPG' },
-      { type: 'video', src: 'photos/2025/IMG_2779.MOV' },
-      { type: 'video', src: 'photos/2025/IMG_2784.MOV' },
-      { type: 'video', src: 'photos/2025/IMG_2788.MOV' },
-      { type: 'video', src: 'photos/2025/IMG_2789.MOV' },
+      { type: 'image', src: 'photos/2025/IMG_2228.JPG', caption: 'Кадр, зроблений за секунду до чергової дурні.' },
+      { type: 'image', src: 'photos/2025/IMG_2229.JPG', caption: 'Погляд, що каже більше, ніж будь-який підпис під ним.' },
+      { type: 'image', src: 'photos/2025/IMG_2238.JPG', caption: 'Зловлено на льоту — як і всі найкращі моменти.' },
+      { type: 'video', src: 'photos/2025/IMG_2779.mp4', caption: 'Відео, де сміх голосніший за динаміки телефону.' },
+      { type: 'video', src: 'photos/2025/IMG_2784.mp4', caption: 'Тут усе й почалося — те, що потім довго переказували.' },
+      { type: 'video', src: 'photos/2025/IMG_2788.mp4', caption: 'Продовження історії, яку краще дивитись, ніж переповідати.' },
+      { type: 'video', src: 'photos/2025/IMG_2789.mp4', caption: 'Останні кадри року. І знову — сміх до сліз.' },
     ]
   },
   {
@@ -87,18 +87,11 @@ const MEMORIES = [
   },
 ];
 
-// ---------- Гостьовий список ----------
-const GUEST_LIST = [
-  'Ім\'я Прізвище',
-  'Ім\'я Прізвище',
-  'Ім\'я Прізвище',
-];
-
 // ---------- Invitation details ----------
 const EVENT_DETAILS = {
-  date: '— впиши дату —',
-  time: '— впиши час —',
-  place: '— впиши адресу —',
+  date: '1 серпня 2026',        
+  time: '14:00', 
+  place: 'просп. Академіка Глушкова 1, BBQ сад, альтанка №23',
   rsvpLink: '#rsvp',
 };
 
@@ -373,37 +366,133 @@ function triggerWarp(memory) {
   animate();
 }
 
+// ---------- Gallery (thumbnail grid, nothing cropped) + Lightbox ----------
+let currentGalleryItems = [];
+let currentLightboxIndex = 0;
+
 function openGallery(memory) {
   document.getElementById('gallery-year').textContent = memory.year;
   document.getElementById('gallery-caption').textContent = memory.caption || '';
   const grid = document.getElementById('gallery-grid');
   grid.innerHTML = '';
 
-  if (!memory.gallery || memory.gallery.length === 0) {
+  currentGalleryItems = memory.gallery || [];
+
+  if (!currentGalleryItems.length) {
     grid.innerHTML = `<div class="gallery-empty">Фото цього року ще в дорозі — скоро тут з'являться кадри.</div>`;
   } else {
-    // script.js — заміни тіло if/else всередині openGallery() на:
-  memory.gallery.forEach(item => {
-    const wrap = document.createElement('div');
-    wrap.className = 'gallery-item';
-    const el = document.createElement(item.type === 'video' ? 'video' : 'img');
-    el.src = item.src;
-    if (item.type === 'video') { el.controls = true; el.muted = true; }
-    wrap.appendChild(el);
-    if (item.caption) {
-      const plaque = document.createElement('div');
-      plaque.className = 'plaque';
-      plaque.textContent = item.caption;
-      wrap.appendChild(plaque);
-    }
-    grid.appendChild(wrap);
-  });
+    currentGalleryItems.forEach((item, index) => {
+      const wrap = document.createElement('button');
+      wrap.type = 'button';
+      wrap.className = 'gallery-item';
+      wrap.setAttribute('aria-label', item.caption || (item.type === 'video' ? 'Відео' : 'Фото'));
+
+      const frame = document.createElement('div');
+      frame.className = 'gallery-thumb-frame';
+
+      if (item.type === 'video') {
+        const vid = document.createElement('video');
+        vid.src = item.src + '#t=0.1';
+        vid.muted = true;
+        vid.playsInline = true;
+        vid.preload = 'metadata';
+        vid.addEventListener('error', () => {
+          frame.classList.add('media-broken');
+        });
+        frame.appendChild(vid);
+        const playBadge = document.createElement('div');
+        playBadge.className = 'play-badge';
+        playBadge.innerHTML = '&#9658;';
+        frame.appendChild(playBadge);
+      } else {
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.loading = 'lazy';
+        img.alt = item.caption || '';
+        frame.appendChild(img);
+      }
+
+      wrap.appendChild(frame);
+
+      if (item.caption) {
+        const plaque = document.createElement('div');
+        plaque.className = 'plaque';
+        plaque.textContent = item.caption;
+        wrap.appendChild(plaque);
+      }
+
+      wrap.addEventListener('click', () => openLightbox(index));
+      grid.appendChild(wrap);
+    });
   }
   document.getElementById('gallery-modal').classList.add('show');
 }
 
 document.getElementById('close-gallery').addEventListener('click', () => {
   document.getElementById('gallery-modal').classList.remove('show');
+});
+
+const lightbox = document.getElementById('lightbox');
+const lightboxContent = document.getElementById('lightbox-content');
+const lightboxCaption = document.getElementById('lightbox-caption');
+
+function renderLightboxItem(index) {
+  const item = currentGalleryItems[index];
+  if (!item) return;
+  lightboxContent.innerHTML = '';
+
+  let el;
+  if (item.type === 'video') {
+    el = document.createElement('video');
+    el.src = item.src;
+    el.controls = true;
+    el.autoplay = true;
+    el.playsInline = true;
+    el.addEventListener('error', () => {
+      lightboxContent.innerHTML = `
+        <div class="media-error">
+          <p>Цей файл не програється в браузері (типово для .mov з iPhone).</p>
+          <p>Перекодуй його в .mp4 (H.264) — дивись <code>convert-videos.sh</code> у проєкті.</p>
+          <a class="btn" href="${item.src}" download>Завантажити оригінал</a>
+        </div>`;
+    });
+  } else {
+    el = document.createElement('img');
+    el.src = item.src;
+    el.alt = item.caption || '';
+  }
+  lightboxContent.appendChild(el);
+  lightboxCaption.textContent = item.caption || '';
+}
+
+function openLightbox(index) {
+  currentLightboxIndex = index;
+  renderLightboxItem(index);
+  lightbox.classList.add('show');
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('show');
+  lightboxContent.innerHTML = '';
+}
+
+function stepLightbox(delta) {
+  if (!currentGalleryItems.length) return;
+  currentLightboxIndex = (currentLightboxIndex + delta + currentGalleryItems.length) % currentGalleryItems.length;
+  renderLightboxItem(currentLightboxIndex);
+}
+
+document.getElementById('close-lightbox').addEventListener('click', closeLightbox);
+document.getElementById('lightbox-prev').addEventListener('click', () => stepLightbox(-1));
+document.getElementById('lightbox-next').addEventListener('click', () => stepLightbox(1));
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('show')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') stepLightbox(-1);
+  if (e.key === 'ArrowRight') stepLightbox(1);
 });
 
 // ---------- Wishlist (live from Supabase) ----------
@@ -504,7 +593,6 @@ async function loadWishlist() {
     });
   });
 
-  // ← ось сюди вставляєш новий блок:
   wishlistEl.querySelectorAll('.cancel-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
       const { error } = await supabaseClient
@@ -516,37 +604,136 @@ async function loadWishlist() {
       loadWishlist();
     });
   });
-  }
+}
 
 loadWishlist();
 
-// ---------- RSVP: список гостей ----------
-const nameSelect = document.getElementById('rsvp-name-select');
+// ---------- RSVP: список гостей (живий, з Supabase — керується з /admin.html) ----------
+// Кастомний dropdown замість нативного <select>, щоб повністю відповідав дизайну
+// і давав легко повернутись назад до списку після "мене нема у списку".
+const selectWrap = document.getElementById('name-select');
+const selectTrigger = document.getElementById('name-select-trigger');
+const selectLabel = document.getElementById('name-select-label');
+const selectPanel = document.getElementById('name-select-panel');
+const nameValueInput = document.getElementById('rsvp-name-value');
+const nameOtherWrap = document.getElementById('name-other-wrap');
 const nameOther = document.getElementById('rsvp-name-other');
-if (nameSelect) {
-  nameSelect.innerHTML = `<option value="" disabled selected>Обери своє ім'я</option>` +
-    GUEST_LIST.map(n => `<option value="${n}">${n}</option>`).join('') +
-    `<option value="__other__">Мене нема у списку</option>`;
+const backToListBtn = document.getElementById('back-to-list-btn');
 
-  nameSelect.addEventListener('change', () => {
-    nameOther.style.display = nameSelect.value === '__other__' ? 'block' : 'none';
-  });
+function selectGuest(name, label) {
+  nameValueInput.value = name;
+  selectLabel.textContent = label;
+  selectTrigger.classList.add('has-value');
+  closePanel();
+
+  if (name === '__other__') {
+    selectWrap.style.display = 'none';
+    nameOtherWrap.style.display = 'flex';
+    nameOther.focus();
+  } else {
+    selectWrap.style.display = 'block';
+    nameOtherWrap.style.display = 'none';
+    nameOther.value = '';
+  }
 }
+
+function openPanel() { selectWrap.classList.add('open'); }
+function closePanel() { selectWrap.classList.remove('open'); }
+
+selectTrigger.addEventListener('click', () => {
+  selectWrap.classList.contains('open') ? closePanel() : openPanel();
+});
+
+document.addEventListener('click', (e) => {
+  if (!selectWrap.contains(e.target)) closePanel();
+});
+
+backToListBtn.addEventListener('click', () => {
+  nameOtherWrap.style.display = 'none';
+  nameOther.value = '';
+  selectWrap.style.display = 'block';
+  nameValueInput.value = '';
+  selectLabel.textContent = "Обери своє ім'я";
+  selectTrigger.classList.remove('has-value');
+  openPanel();
+});
+
+let guestsCache = [];
+
+async function loadGuestList() {
+  const { data: guests, error } = await supabaseClient
+    .from('guests')
+    .select('name, invite_file')
+    .order('name', { ascending: true });
+
+  guestsCache = guests || [];
+
+  selectPanel.innerHTML = '';
+
+  if (error) {
+    console.error(error);
+    selectPanel.innerHTML = `<div class="custom-select-empty">Не вдалось завантажити список</div>`;
+  } else if (!guests.length) {
+    selectPanel.innerHTML = `<div class="custom-select-empty">Список гостей поки порожній</div>`;
+  } else {
+    guests.forEach(g => {
+      const opt = document.createElement('div');
+      opt.className = 'custom-select-option';
+      opt.textContent = g.name;
+      opt.addEventListener('click', () => selectGuest(g.name, g.name));
+      selectPanel.appendChild(opt);
+    });
+  }
+
+  const otherOpt = document.createElement('div');
+  otherOpt.className = 'custom-select-option other-option';
+  otherOpt.textContent = 'Мене нема у списку';
+  otherOpt.addEventListener('click', () => selectGuest('__other__', 'Мене нема у списку'));
+  selectPanel.appendChild(otherOpt);
+}
+
+loadGuestList();
 
 // ---------- RSVP ----------
 const rsvpForm = document.getElementById('rsvp-form');
+const RSVP_DONE_KEY = 'rsvp_done_name';
+
+function lockRsvpForm(guestName) {
+  const statusEl = document.getElementById('rsvp-status');
+  rsvpForm.style.display = 'none';
+  const already = document.createElement('p');
+  already.className = 'rsvp-already';
+  already.textContent = guestName
+    ? `Дякуємо, ${guestName}! Твоя присутність вже підтверджена ✦`
+    : 'Дякуємо! Твоя присутність вже підтверджена ✦';
+  rsvpForm.parentNode.insertBefore(already, rsvpForm);
+  if (statusEl) statusEl.textContent = '';
+}
+
+// Якщо людина вже підтвердила прихід раніше на цьому пристрої — форму більше не показуємо.
+const alreadyDoneName = localStorage.getItem(RSVP_DONE_KEY);
+if (alreadyDoneName !== null && rsvpForm) {
+  lockRsvpForm(alreadyDoneName);
+}
+
 if (rsvpForm) {
   rsvpForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const statusEl = document.getElementById('rsvp-status');
-    const selected = nameSelect.value;
+    const selected = nameValueInput.value;
     const guest_name = selected === '__other__' ? nameOther.value.trim() : selected;
     const guest_email = document.getElementById('rsvp-email').value.trim();
     const plus_one = document.getElementById('rsvp-plusone').checked;
     const comment = document.getElementById('rsvp-comment').value.trim();
     const favorite_year = document.getElementById('rsvp-year').value.trim();
 
-    if (!guest_name) return;
+    if (!guest_name) {
+      statusEl.textContent = "Спочатку обери своє ім'я вище ↑";
+      return;
+    }
+
+    const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
 
     const { error } = await supabaseClient.from('rsvp').insert({
       guest_name, guest_email, plus_one, comment, favorite_year
@@ -555,15 +742,24 @@ if (rsvpForm) {
     if (error) {
       statusEl.textContent = 'Не вдалось надіслати. Спробуй ще раз.';
       console.error(error);
+      if (submitBtn) submitBtn.disabled = false;
       return;
     }
     statusEl.textContent = 'Дякую! Вже занотовано зіркою ✦';
-    rsvpForm.reset();
 
-    fetch('/api/send-invite', {
+    // Один раз — і все: більше форма для цього пристрою не з'явиться.
+    localStorage.setItem(RSVP_DONE_KEY, guest_name);
+    lockRsvpForm(guest_name);
+
+    const guestEntry = guestsCache.find(g => g.name === guest_name);
+    const inviteImageUrl = guestEntry && guestEntry.invite_file
+      ? 'https://ptupydcoysclmdjmwswt.supabase.co/storage/v1/object/public/invitations/' + guestEntry.invite_file
+      : null;
+
+    fetch('http://localhost:3001/api/send-invite', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: guest_name, email: guest_email }),
+      body: JSON.stringify({ name: guest_name, email: guest_email, inviteImageUrl }),
     }).catch(err => console.warn('send-invite ще не налаштовано:', err));
   });
 }

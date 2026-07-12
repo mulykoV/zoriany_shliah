@@ -59,12 +59,28 @@
   <h2>Ти прийдеш?</h2>
   <p class="sub">Дай знати, щоб зірка не лишилась самотньою.</p>
   <form class="rsvp-form" id="rsvp-form">
-    <select id="rsvp-name-select" required></select>
-    <input type="text" id="rsvp-name-other" placeholder="Впиши своє ім'я" style="display:none;" />
+    <div class="custom-select" id="name-select">
+      <button type="button" class="custom-select-trigger" id="name-select-trigger">
+        <span id="name-select-label">Обери своє ім'я</span>
+        <svg class="select-arrow" viewBox="0 0 20 20" width="16" height="16">
+          <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="custom-select-panel" id="name-select-panel"></div>
+    </div>
+    <div class="name-other-wrap" id="name-other-wrap" style="display:none;">
+      <input type="text" id="rsvp-name-other" placeholder="Впиши своє ім'я" />
+      <button type="button" class="back-to-list" id="back-to-list-btn">← обрати зі списку</button>
+    </div>
+    <input type="hidden" id="rsvp-name-value" required />
     <input type="email" id="rsvp-email" placeholder="Email (щоб надіслати листівку-запрошення)" required />
     <input type="text" id="rsvp-year" placeholder="Яку зірку/рік ти пам'ятаєш найкраще?" />
     <textarea id="rsvp-comment" rows="3" placeholder="Коментар (необов'язково)"></textarea>
-    <label><input type="checkbox" id="rsvp-plusone" /> Прийду не сам(а)</label>
+    <label class="checkbox-label">
+      <input type="checkbox" id="rsvp-plusone" class="custom-checkbox-input" />
+      <span class="checkbox-box"></span>
+      Прийду не сам(а)
+    </label>
     <button type="submit" class="btn primary">Підтвердити прихід</button>
     <div class="submit-status" id="rsvp-status"></div>
   </form>
@@ -82,6 +98,14 @@
   <div class="gallery-year" id="gallery-year"></div>
   <div class="gallery-caption" id="gallery-caption"></div>
   <div class="gallery-grid" id="gallery-grid"></div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="close-modal" id="close-lightbox">✕</button>
+  <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Попереднє">‹</button>
+  <div class="lightbox-content" id="lightbox-content"></div>
+  <button class="lightbox-nav next" id="lightbox-next" aria-label="Наступне">›</button>
+  <div class="lightbox-caption" id="lightbox-caption"></div>
 </div>
 
 <div class="invite-modal" id="invite-modal">
