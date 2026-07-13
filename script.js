@@ -659,6 +659,11 @@ backToListBtn.addEventListener('click', () => {
 });
 
 let guestsCache = [];
+let submittedNamesSet = new Set();
+
+function normalizeName(name) {
+  return (name || '').trim().toLowerCase();
+}
 
 async function loadGuestList() {
   const { data: guests, error } = await supabaseClient
@@ -666,17 +671,28 @@ async function loadGuestList() {
     .select('name, invite_file')
     .order('name', { ascending: true });
 
+  const { data: rsvps, error: rsvpError } = await supabaseClient
+    .from('rsvp')
+    .select('guest_name');
+
+  if (rsvpError) console.error(rsvpError);
+  submittedNamesSet = new Set((rsvps || []).map(r => normalizeName(r.guest_name)));
+
   guestsCache = guests || [];
+  // Гості, які вже підтвердили прихід (є в таблиці rsvp), зникають зі списку вибору.
+  // Якщо адмін видаляє їхній RSVP-запис — вони знову з'являються, бо список
+  // завжди звіряється з живими даними з Supabase.
+  const availableGuests = guestsCache.filter(g => !submittedNamesSet.has(normalizeName(g.name)));
 
   selectPanel.innerHTML = '';
 
   if (error) {
     console.error(error);
     selectPanel.innerHTML = `<div class="custom-select-empty">Не вдалось завантажити список</div>`;
-  } else if (!guests.length) {
-    selectPanel.innerHTML = `<div class="custom-select-empty">Список гостей поки порожній</div>`;
+  } else if (!availableGuests.length) {
+    selectPanel.innerHTML = `<div class="custom-select-empty">Усі вже підтвердили прихід ✦</div>`;
   } else {
-    guests.forEach(g => {
+    availableGuests.forEach(g => {
       const opt = document.createElement('div');
       opt.className = 'custom-select-option';
       opt.textContent = g.name;
@@ -735,6 +751,21 @@ if (rsvpForm) {
     const submitBtn = rsvpForm.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 
+    // Захист від дублю: перевіряємо живі дані ще раз перед відправкою —
+    // раптом хтось інший (або ти сам з іншої вкладки) вже підтвердив це ім'я.
+    const { data: existing, error: checkError } = await supabaseClient
+      .from('rsvp')
+      .select('id')
+      .ilike('guest_name', guest_name);
+
+    if (checkError) console.error(checkError);
+    if (existing && existing.length) {
+      statusEl.textContent = 'Це ім\'я вже підтвердило прихід. Онови сторінку й обери інше.';
+      if (submitBtn) submitBtn.disabled = false;
+      loadGuestList();
+      return;
+    }
+
     const { error } = await supabaseClient.from('rsvp').insert({
       guest_name, guest_email, plus_one, comment, favorite_year
     });
@@ -747,19 +778,21 @@ if (rsvpForm) {
     }
     statusEl.textContent = 'Дякую! Вже занотовано зіркою ✦';
 
-    // Один раз — і все: більше форма для цього пристрою не з'явиться.
+    // Один раз — і все: більше форма для цього пристрою не з'явиться,
+    // а ім'я зникає зі спільного списку вибору для всіх.
     localStorage.setItem(RSVP_DONE_KEY, guest_name);
     lockRsvpForm(guest_name);
+    loadGuestList();
 
     const guestEntry = guestsCache.find(g => g.name === guest_name);
     const inviteImageUrl = guestEntry && guestEntry.invite_file
       ? 'https://ptupydcoysclmdjmwswt.supabase.co/storage/v1/object/public/invitations/' + guestEntry.invite_file
       : null;
 
-    fetch('http://localhost:3001/api/send-invite', {
+    fetch('/api/send-invite', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: guest_name, email: guest_email, inviteImageUrl }),
-    }).catch(err => console.warn('send-invite ще не налаштовано:', err));
+    }).catch(err => console.warn('send-invite не спрацював:', err));
   });
 }
